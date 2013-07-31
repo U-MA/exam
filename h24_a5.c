@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define M 100 // 問題で与えられている定数。問題文では小文字だが、大文字で表現する
+#define M 10 // 問題で与えられている定数。問題文では小文字だが、大文字で表現する
 
 /* dice: 0から3までの整数を等確率で返す
  *この関数は問題で与えられているため作成する必要は無い
@@ -43,7 +43,7 @@ void move(int *x, int *y) {
  *        格子点の個数を返す
  * 問題(2)で作る関数
  */
-int count(int **a, int f) {
+int count(int a[][M], int f) {
 	int i, j;
 	int cnt;
 
@@ -62,15 +62,17 @@ int count(int **a, int f) {
 /* hist: 二次元配列aを受け取り、そのときまでのコマの訪問回数が少ない順に
  *       訪問回数と、訪問回数ごとの格子点の個数を表示する
  * 問題(3)で作る関数。関数countは必ず使わなければならない
+ * 表示の仕方のいい方法が思いつかない
  */
-void hist(int **a) {
+void hist(int a[][M]) {
 	int cnt, n;
 	int sum; // 訪問回数ごとの格子点の個数の和
 
 	cnt = sum = 0;
+	printf("訪問回数\t格子点の個数\n");
 	while (sum != M*M) {
 		n = count(a, cnt);
-		printf("訪問回数:%3d 格子点の個数:%3d\n", cnt, n);
+		printf("%8d\t%12d\n", cnt, n);
 		cnt++;
 		sum += n;
 	}
@@ -83,6 +85,38 @@ void hist(int **a) {
  */
 int main(int argc, char **argv) {
 	int p, q;
+	int a[M][M] = { 0 };
+
+	srand(2013); // 実際の問題では必要の無い行。dice関数で使う
+
+	printf("コマの初期位置(p,q)を入力してください(ともに0以上%d未満):", M);
+	scanf("%d %d", &p, &q);
+	while ((p < 0 || M <= p) || (q < 0 || M <= q)) {
+		printf("不正な入力です。もう一度お願いします\n");
+		printf("コマの初期位置(p,q)を入力してください(ともに0以上%d未満):", M);
+		scanf("%d %d", &p, &q);
+	} // 同じ部分があるので美しくない
+
+	a[p][q] = 1; // 初期位置は訪問済と考える
+
+	while (count(a, 0) != 0) { // 訪問回数が0の格子点が存在する限り繰り返す
+		move(&p, &q);
+		if (p == -1) {
+			p += M;
+		} else if (p == M) {
+			p -= M;
+		}
+
+		if (q == -1) {
+			q += M;
+		} else if (q == M) {
+			q-= M;
+		}
+
+		a[p][q]++;
+	}
+
+	hist(a);
 
 	return 0;
 }
