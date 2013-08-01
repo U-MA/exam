@@ -45,31 +45,36 @@ cell *searchb(cell *list, int amin, int amax) {
  *          保てるようにaを要素として挿入し、挿入されたリストのポインタ値を返す
  * 問題(3)で作る関数
  */
-/*
 cell *inserts(cell *list, int a) {
-	cell *before, *first, *mid;
+	cell *before, *first;
 
-	first = list; // リストの先頭
-	before = mid = NULL; // 直前に指していたリスト
+	if (list == NULL) { // 空リストも昇順リストとして考える
+		return insertf(list, a);
+	}
+
+	first = list;   // リストの先頭
+	before =  NULL; // 直前に指していたリスト
 	while (list != NULL) {
 		if (list->value >= a) {
-			mid = (cell *)malloc(sizeof(cell));
-			mid->value = a;
-			mid->next  = list;
-			if (before != NULL) {
-				before->next = mid;
+			list = insertf(list, a);
+			if (before != NULL) { // 直前に指していたリストがあれば
+				before->next = list;
+				return first;
+			} else {              // なければ
+				return list;
 			}
-			return first;
 		}
 		before = list;
 		list = list->next;
 	}
+
+	// リストの末尾に要素を追加
 	list = (cell *)malloc(sizeof(cell));
 	list->value = a;
+	list->next = NULL;
 	before->next = list;
 	return first;
 }
-*/
 
 
 /* searchsb: 昇順リストのポインタ値と整数amin,amaxを受け取り、listが表すリストの要素の中で
@@ -87,6 +92,7 @@ cell *searchsb(cell *list, int amin, int amax) {
 	if (list == NULL) { return NULL; } // amin <= a[i]となる最小のiが存在しなかった
 
 	newlist = inserts(newlist, list->value);
+	list = list->next;
 
 	while ((list != NULL) && (list->value <= amax)) {
 		newlist = inserts(newlist, list->value);
@@ -100,13 +106,18 @@ cell *searchsb(cell *list, int amin, int amax) {
  * 問題ではmainを作る必要は無い。また、このmainは環境に優しくない（メモリの解放をしていない）
  */
 int main(int argc, char **argv) {
-	cell *list, *aslist;
-	cell *listhead;
-	cell *minus1to2;
-	int i;
+	cell *list, *aslist, *listhead;
+	cell *minus1to2, *asminus1to2;
+	int i, res;
+
 	int f[5] = { 2, 4, 1, -1, -2 }; // insertfテスト用
 	int b[3] = { 2, 1, -1 }; // searchbテスト用
 	int s[5] = { -2, -1, 1, 2, 4 };
+
+	enum { OK=0, FAIL=1 };
+
+
+	res = OK;
 
 	list = NULL;
 	for (i=0; i < 5; i++) {
@@ -114,50 +125,61 @@ int main(int argc, char **argv) {
 	}
 
 	listhead = list;
-	printf("insertf test: ");
 	for (i=0; i < 5; i++) {
 		if (list->value != f[4-i]) {
-			printf("FAIL\n");
-			exit(1);
+			putchar('x');
+			res = FAIL;
+			break;
 		}
 		list = list->next;
 	}
-	printf("OK\n");
 	list = listhead;
 
-	printf("searchb test: ");
 	minus1to2 = searchb(list, -1, 2);
 	i=0;
 	while (minus1to2 != NULL) {
 		if (minus1to2->value != b[i]) {
-			printf("FAIL\n");
-			exit(1);
+			putchar('x');
+			res = FAIL;
+			break;
 		}
 		minus1to2 = minus1to2->next;
 		i++;
 	}
-	printf("OK\n");
 
 	aslist = NULL;
 	for (i=0; i < 5; i++) {
 		aslist = inserts(aslist, f[i]);
 	}
 
-	printf("inserts test: ");
+	listhead = aslist;
 	for (i=0; (aslist != NULL) && (i < 5); i++) {
-		printf("aslist->value:%d\n", aslist->value);
-		/*
 		if (aslist->value != s[i]) {
-			printf("FAIL\n");
-			printf("aslist->value:%d s[%d]:%d\n", aslist->value, i, s[i]);
-			exit(1);
+			putchar('x');
+			res = FAIL;
+			break;
 		}
-		*/
 		aslist = aslist->next;
 	}
-	printf("OK\n");
-	list = listhead;
+	aslist = listhead;
 
+	asminus1to2 = searchsb(aslist, -1, 2);
+	i=0;
+	while (asminus1to2 != NULL) {
+		if (asminus1to2->value != b[2-i]) {
+			putchar('x');
+			res = FAIL;
+			break;
+		}
+		asminus1to2 = asminus1to2->next;
+		i++;
+	}
+
+	if (res) {
+		printf("FAIL\n");
+	} else {
+		printf("OK\n");
+	}
 
 	return 0;
 }
