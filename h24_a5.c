@@ -79,15 +79,68 @@ void hist(int a[][M]) {
 }
 
 
+/* test: テストコード。問題とは関係の無いコード */
+void test() {
+	int a[M][M];
+	int p, q, ip, iq;
+	int i, j;
+
+	for (i=0; i < 10; i++) {
+		if (dice() > 3) {
+			printf("dice() FAIL\n");
+			exit(1);
+		}
+	}
+
+	p = q = 0;
+	for (i=0; i < 10; i++) {
+		ip = p, iq = q;
+		move(&p, &q);
+		if (abs((p-ip)+(q-iq)) != 1) {
+			printf("move() FAIL\n");
+			exit(1);
+		}
+	}
+
+	for (i=0; i < M; i++) {
+		for (j=0; j < M; j++) {
+			a[i][j] = i;
+		}
+	}
+	for (i=0; i < M; i++) {
+		if (count(a, i) != M) {
+			printf("count() FAIL\n");
+			exit(1);
+		}
+	}
+	//hist(a);
+}
+
+
+
+#define CHK_BOUNDARY( x ) {   \
+	if ((x) == -1) (x) += M;    \
+	else if((x) == M) (x) -= M; \
+}
+
 /* コマの初期位置(p,q)を読み込み、コマが全ての格子点を少なくとも一回訪問するまで
  * コマの移動を繰り返した後、訪問回数の度数分布表を表示するプログラム
  * 問題(4)で作るプログラム
  */
 int main(int argc, char **argv) {
 	int p, q;
-	int a[M][M] = { 0 };
+	int a[M][M];
+	int i, j;
+
+	test();
 
 	srand(2013); // 実際の問題では必要の無い行。dice関数で使う
+
+	for (i=0; i < M; i++) {
+		for (j=0; j < M; j++) {
+			a[i][j] = 0;
+		}
+	}
 
 	printf("コマの初期位置(p,q)を入力してください(ともに0以上%d未満):", M);
 	scanf("%d %d", &p, &q);
@@ -97,21 +150,14 @@ int main(int argc, char **argv) {
 		scanf("%d %d", &p, &q);
 	} // 同じ部分があるので美しくない
 
+
 	a[p][q] = 1; // 初期位置は訪問済と考える
 
 	while (count(a, 0) != 0) { // 訪問回数が0の格子点が存在する限り繰り返す
 		move(&p, &q);
-		if (p == -1) {
-			p += M;
-		} else if (p == M) {
-			p -= M;
-		}
 
-		if (q == -1) {
-			q += M;
-		} else if (q == M) {
-			q-= M;
-		}
+		CHK_BOUNDARY(p);
+		CHK_BOUNDARY(q);
 
 		a[p][q]++;
 	}
@@ -120,3 +166,4 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
+
