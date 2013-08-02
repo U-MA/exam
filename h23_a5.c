@@ -43,8 +43,7 @@ void setc(int a[][M], int i, int j, int c) {
  *          長方形領域の個数を返す
  */
 int setcall(int a[][M]) {
-	int i, j;
-	int c;
+	int i, j, c;
 
 	c=1;
 	for (i=0; i < M; i++) {
@@ -63,34 +62,24 @@ int setcall(int a[][M]) {
  *       配列aの要素のうち、値が0,1,2,...,nであるものの数を整数型の配列bの0番目の要素,2番目の
  *       要素,...,n番目の要素にそれぞれ格納する
  */
-/*
 void hist(int a[][M], int n, int *b) {
 	int i, j;
-	int c;
+	int c, sum;
 	int d[2];
 
-	for (c=1; c <= n; c++) {
-		for (i=0; i < M; i++) {
-			for (j=0; j < M; j++) {
-				if (a[i][j] != 0) {
-					c = a[i][j];
-					getdiag(a, i, j, d);
-					b[c] = (d[0]-i+1) * (d[1]-j+1);
-				}
-			}
-		}
-	}
-	*/
-
-	/*
+	c=1, sum=0;
 	for (i=0; i < M; i++) {
 		for (j=0; j < M; j++) {
-			if (a[i][j] != 0) {
-				b[a[i][j]]++;
+			if (a[i][j] == c) { // 要素がcであるものが見つかった
+				getdiag(a, i, j, d);
+				b[c] = (d[0]-i+1) * (d[1]-j+1);
+				sum += b[c]; // 0以外の要素数を数える
+				c++, i=-1;
+				break;
 			}
 		}
 	}
-	*/
+	b[0] = M*M-sum;
 }
 
 
@@ -154,7 +143,7 @@ int main(int argc, char **argv) {
 		putchar('\n');
 	}
 
-	printf("\n領域数:%d\n", setcall(a));
+	printf("\n領域数:%d\n", (num = setcall(a)));
 
 	putchar('\n');
 	for (i=0; i < M; i++) {
@@ -163,9 +152,12 @@ int main(int argc, char **argv) {
 		}
 		putchar('\n');
 	}
+	putchar('\n');
 
 	hist(a, num, b);
-
+	for (i=0; i < 20; i++) {
+		printf("b[%d] : %d\n", i, b[i]);
+	}
 
 	return 0;
 }
