@@ -35,7 +35,7 @@ int search(char *s, char strs[N][M], int n) {
 	while (s[++slen] != '\0'); // sの文字数を測る
 
 	for (i=0; i < n; i++) {
-		for (j=0; j+slen < M; j++) {
+		for (j=0; j+slen <= M; j++) {
 			l=j, k=0;
 			while (strs[i][l] == s[k]) {
 				l++, k++;
@@ -82,11 +82,13 @@ void store_test() {
 
 
 void search_test() {
-	char strs[N][M] = {
-		"Hello, world",
-		"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy",
-		"conflict"
-	};
+	char strs[N][M];
+
+	printf("[Hello, world]:%d\n", store("Hello, world", 0, strs));
+	printf("[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy]:%d\n",
+			store("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy", 1, strs));
+	printf("[conflict]:%d\n", store("conflict", 2, strs));
+
 
 	printf("[0]%d ", search("world", strs, 3));
 	printf("[2]%d ", search("ict", strs, 3));
