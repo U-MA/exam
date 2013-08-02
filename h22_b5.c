@@ -48,6 +48,26 @@ int search(char *s, char strs[N][M], int n) {
 	return -1;
 }
 
+
+/* 問題(3). 概略なのでどこまで記述すればよいか悩むが、まずデータ構造については
+ * 次のようにリスト構造で表すとメモリの許す限りいくつでも文字列を格納できる
+ */
+typedef struct strlist {
+	char s[M]; // 文字列
+	struct strlist *next;
+} STRLIST;
+
+/* それぞれの関数に関しては引数の二次元配列を構造体へのポインタとすること
+ * store関数に関しては文字列を格納する前に構造体のメモリを確保しないといけない
+ * また、k行目に文字列を格納するという仕様なのでk番目までのリストが無い場合は
+ * k番目までのリストをそれぞれ作る必要がある。
+ * searchに関してはstrsの0行目からn-1行目まで回していた最初のfor文を
+ * リストの0番目からn-1番目まで回すということをする必要がある。
+ * (面倒なので今は例のコードは書かない。すみません)
+ */
+
+
+
 void store_test() {
 	char strs[N][M];
 	char *overM = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // M+1文字
@@ -64,7 +84,7 @@ void store_test() {
 void search_test() {
 	char strs[N][M] = {
 		"Hello, world",
-		"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy",
 		"conflict"
 	};
 
@@ -72,6 +92,7 @@ void search_test() {
 	printf("[2]%d ", search("ict", strs, 3));
 	printf("[2]%d ", search("ct", strs, 3));
 	printf("[-1]%d ", search("cty", strs, 3));
+	printf("[1]%d ", search("xy", strs, 3));
 	putchar('\n');
 }
 
