@@ -27,29 +27,26 @@ int store(char *s, int k, char strs[N][M]) {
  *         されていない場合には-1を返す
  * 問題(2)
  */
-/*
 int search(char *s, char strs[N][M], int n) {
 	int slen; // sの文字数
+	int i, j, k, l;
 
 	slen=-1;
 	while (s[++slen] != '\0'); // sの文字数を測る
 
 	for (i=0; i < n; i++) {
-		k=0;
-		for (j=0; j < slen; j++) {
-			if (strs[i][l] == s[k]) {
+		for (j=0; j+slen < M; j++) {
+			l=j, k=0;
+			while (strs[i][l] == s[k]) {
 				l++, k++;
-			} else {
-				l=j, k=0;
+				if (k == slen) {
+					return i;
+				}
 			}
-		}
-
-
 		}
 	}
 	return -1;
 }
-*/
 
 void store_test() {
 	char strs[N][M];
@@ -58,14 +55,29 @@ void store_test() {
 	int cnum; // 文字数
 
 	cnum = store(overM, 0, strs);
-	printf("文字数: %d\n", cnum);
+	printf("文字数[80]: %d\n", cnum);
 	cnum = store(s, 0, strs);
-	printf("文字数: %d\n", cnum);
+	printf("文字数[12]: %d\n", cnum);
 }
 
+
+void search_test() {
+	char strs[N][M] = {
+		"Hello, world",
+		"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+		"conflict"
+	};
+
+	printf("[0]%d ", search("world", strs, 3));
+	printf("[2]%d ", search("ict", strs, 3));
+	printf("[2]%d ", search("ct", strs, 3));
+	printf("[-1]%d ", search("cty", strs, 3));
+	putchar('\n');
+}
 
 
 int main(int argc, char **argv) {
 	store_test();
+	search_test();
 	return 0;
 }
