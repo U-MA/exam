@@ -35,14 +35,43 @@ void array_partition(int *a, int n) {
 	tmp = a[l-1]; a[l-1] = a[0]; a[0] = tmp; // a[0]を基準の位置に移動
 }
 
-/* 問題(3) この系列を連結リストで実現 */
+/* 問題(3) この系列を連結リストで実現
+ *
+ *         [時間計算量について考える]
+ *         各セルのポインタの付け替え操作はO(1)で、それをn-1個の要素に対して
+ *         それぞれ行うので最悪時間計算量はO(n).
+ *
+ *         [配列のものとの比較]
+ *         オーダで考えると同じO(n)であるが、配列の方は定数オーダの操作をn/2回繰り返すのに
+ *         対して、リストの方は定数オーダの操作を(n-1)回繰り返す.よって操作の繰り返し回数で
+ *         考えると大きいnに対しては配列での実装の方が速いと言える
+ */
 
 typedef struct list {
 	int value;
 	struct list *next;
 } LIST;
 
-void llist_partition(LIST *list) {
+LIST *llist_partition(LIST *list) {
+	LIST *l, g; // little, greaterの略. それぞれlistの0番目より小さいもの,以上のものをリストでつなぐ
+	LIST *pivot; // listの最初のリストを指す
+
+	l = g = pivot = list;
+	list = list->next;
+	while (list != NULL) {
+		if (list->value < pivot->value) { // lは常にpivotより小さい系列の先頭を指す
+			tmp = list->next;
+			list->next = l;
+			l = list;
+			list = tmp;
+		} else { // gは常にpivot以上の系列の最後の要素を指す
+			g->next = list;
+			g = g->next;
+			list = list->next;
+		}
+	}
+	g->next = NULL;
+	return l;
 }
 
 
