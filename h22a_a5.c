@@ -1,16 +1,15 @@
 #include <stdio.h>
 
 
+// 問題(1)
 /* print: 整数xを受け取り、xの10進数の各桁の数値を最下位桁から順に改行して表示する
  *
- * 問題(1)
  */
 void print(int x) {
-	int i;
-	for (i=0; i < 5; i++) { // xは５桁なので5回繰り返せばいい
-		printf("%d\n", x%10);
+	do {
+		printf("%d ", x%10);
 		x /= 10;
-	}
+	} while (x != 0);
 }
 
 
@@ -71,6 +70,8 @@ int main(int argc, char **argv) {
 	};
 	int b[10] = { 0 };
 	int i;
+
+	printf("print test\n");
 
 	countAll(a, 10, b);
 
