@@ -12,19 +12,19 @@
  * 問題(1)
  */
 int search(char *s, char *strs, int *idx, int n) {
-	int i, j, p;
+    int i, j, p;
 
-	for (i=0; i < n; i++) {
-		p = idx[i];
-		j = 0;
-		while (strs[p] == s[j]) {
-			if (s[j] == '\0') {
-				return i;
-			}
-			p++, j++;
-		}
-	}
-	return -1;
+    for (i=0; i < n; i++) {
+        p = idx[i];
+        j = 0;
+        while (strs[p] == s[j]) {
+            if (s[j] == '\0') {
+                return i;
+            }
+            p++, j++;
+        }
+    }
+    return -1;
 }
 
 
@@ -36,24 +36,24 @@ int search(char *s, char *strs, int *idx, int n) {
  * 問題(2)
  */
 int addend(char *s, char *strs, int *idx, int n) {
-	int maxidx;
-	int i, p;
-	int nucnt; // strs中の終端文字数
+    int maxidx;
+    int i, p;
+    int nucnt; // strs中の終端文字数
 
 
-	for (i=nucnt=0; nucnt < n; i++) {
-		if (strs[i] == '\0') {
-			nucnt++;
-		}
-	}
-	p = i; // 最後の終端文字の直後を指す
-	idx[n] = p;
+    for (i=nucnt=0; nucnt < n; i++) {
+        if (strs[i] == '\0') {
+            nucnt++;
+        }
+    }
+    p = i; // 最後の終端文字の直後を指す
+    idx[n] = p;
 
-	for (i=0; s[i] != '\0'; i++) {
-		strs[p++] = s[i];
-	}
-	strs[p] = '\0';
-	return n+1;
+    for (i=0; s[i] != '\0'; i++) {
+        strs[p++] = s[i];
+    }
+    strs[p] = '\0';
+    return n+1;
 }
 
 
@@ -77,62 +77,78 @@ int addend(char *s, char *strs, int *idx, int n) {
  *
  * 問題(4)
  */
-/*
 int delete(char *s, char *strs, int *idx, int n) {
-	int i;
+    int i;
 
-	for (i=0; i < n; i++) {
-		p = idx[i];
-		j=0;
-		while (strs[p] == s[j]) {
-			j++, p++;
-		}
-		if (s[j] != '\0') {
-			return -1;
-		}
-	}
+    for (i=0; i < n; i++) {
+        p = idx[i];
+        j=0;
+        while (strs[p] == s[j]) {
+            if (s[j] == '\0') {                                  // 一致した
+                break;
+            }
+            j++, p++;
+        }
+        if (s[j] != '\0') {                                    // 次の文字列へ
+            break;
+        }
+        slen = j;
+        p++;                                                   // 削除する文字列の直後の文字列を指す
+        while (1) {
+            if ((strs[p] == '\0') && strs[p+1] == '\0') {        // 二回続けて終端文字がくればシフト終了
+                break;
+            }
+            strs[p-slen] = strs[p];
+            p++;
+        }
+        for (j=0; j < n; j++) {
+            if (idx[j] > idx[i]) {
+                idx[j] = idx[j] - slen;
+            }
+        }
+    }
+    return -1;
 }
-*/
 
 
 void print(char *strs, int *idx, int n) {
-	int i;
+    int i;
 
-	for (i=0; i < n; i++) {
-		printf("%s\n", strs+idx[i]);
-	}
-	printf("print end\n");
+    for (i=0; i < n; i++) {
+        printf("%s\n", strs+idx[i]);
+    }
+    printf("print end\n");
 }
 
 void search_test() {
-	char strs[SMAX] = "dog\0cat\0mouse\0bat";
-	int idx[NMAX] = { 0, 4, 8, 14 };
-	int n = 4;
+    char strs[SMAX] = "dog\0cat\0mouse\0bat";
+    int idx[NMAX] = { 0, 4, 8, 14 };
+    int n = 4;
 
-	char *s = "cat";
+    char *s = "cat";
 
-	if (search(s, strs, idx, n) != 1) {
-		printf("FAIL: %d\n", search(s, strs, idx, n));
-		exit(1);
-	}
-	printf("OK\n");
+    if (search(s, strs, idx, n) != 1) {
+        printf("FAIL: %d\n", search(s, strs, idx, n));
+        exit(1);
+    }
+    printf("OK\n");
 }
 
 void addend_test() {
-	char strs[SMAX] = "dog\0cat\0mouse\0bat";
-	int idx[NMAX] = { 0, 4, 8, 14 };
-	int n = 4;
+    char strs[SMAX] = "dog\0cat\0mouse\0bat";
+    int idx[NMAX] = { 0, 4, 8, 14 };
+    int n = 4;
 
-	print(strs, idx, n);
+    print(strs, idx, n);
 
-	printf("\n文字列の数[5]:%d\n\n", (n = addend("momonga", strs, idx, n)));
+    printf("\n文字列の数[5]:%d\n\n", (n = addend("momonga", strs, idx, n)));
 
-	print(strs, idx, n);
+    print(strs, idx, n);
 }
 
 
 int main(int argc, char **argv) {
-	search_test();
-	addend_test();
-	return 0;
+    search_test();
+    addend_test();
+    return 0;
 }

@@ -12,11 +12,11 @@
  *        M文字だけを格納し、'\0'は付与しない
  */
 int store(char *s, int k, char strs[N][M]) {
-	int i;
-	for (i=0; (i < M) && (s[i] != '\0'); i++) {
-		strs[k][i] = s[i];
-	}
-	return i;
+    int i;
+    for (i=0; (i < M) && (s[i] != '\0'); i++) {
+        strs[k][i] = s[i];
+    }
+    return i;
 }
 
 
@@ -27,24 +27,24 @@ int store(char *s, int k, char strs[N][M]) {
  *         されていない場合には-1を返す
  */
 int search(char *s, char strs[N][M], int n) {
-	int slen; // sの文字数
-	int i, j, k, l;
+    int slen; // sの文字数
+    int i, j, k, l;
 
-	slen=-1;
-	while (s[++slen] != '\0'); // sの文字数を測る
+    slen=-1;
+    while (s[++slen] != '\0'); // sの文字数を測る
 
-	for (i=0; i < n; i++) {
-		for (j=0; j+slen <= M; j++) {
-			l=j, k=0;
-			while (strs[i][l] == s[k]) {
-				l++, k++;
-				if (k == slen) {
-					return i;
-				}
-			}
-		}
-	}
-	return -1;
+    for (i=0; i < n; i++) {
+        for (j=0; j+slen <= M; j++) {
+            l=j, k=0;
+            while (strs[i][l] == s[k]) {
+                l++, k++;
+                if (k == slen) {
+                    return i;
+                }
+            }
+        }
+    }
+    return -1;
 }
 
 
@@ -52,8 +52,8 @@ int search(char *s, char strs[N][M], int n) {
  * 次のようにリスト構造で表すとメモリの許す限りいくつでも文字列を格納できる
  */
 typedef struct strlist {
-	char s[M]; // 文字列
-	struct strlist *next;
+    char s[M]; // 文字列
+    struct strlist *next;
 } STRLIST;
 
 /* それぞれの関数に関しては引数の二次元配列を構造体へのポインタとすること
@@ -75,38 +75,38 @@ typedef struct strlist {
 /**************************************************************************************************/
 
 void store_test() {
-	char strs[N][M];
-	char *overM = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // M+1文字
-	char *s = "Hello, world";
-	int cnum; // 文字数
+    char strs[N][M];
+    char *overM = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"; // M+1文字
+    char *s = "Hello, world";
+    int cnum; // 文字数
 
-	cnum = store(overM, 0, strs);
-	printf("文字数[80]: %d\n", cnum);
-	cnum = store(s, 0, strs);
-	printf("文字数[12]: %d\n", cnum);
+    cnum = store(overM, 0, strs);
+    printf("文字数[80]: %d\n", cnum);
+    cnum = store(s, 0, strs);
+    printf("文字数[12]: %d\n", cnum);
 }
 
 
 void search_test() {
-	char strs[N][M];
+    char strs[N][M];
 
-	printf("[Hello, world]:%d\n", store("Hello, world", 0, strs));
-	printf("[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy]:%d\n",
-			store("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy", 1, strs));
-	printf("[conflict]:%d\n", store("conflict", 2, strs));
+    printf("[Hello, world]:%d\n", store("Hello, world", 0, strs));
+    printf("[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy]:%d\n",
+            store("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaxy", 1, strs));
+    printf("[conflict]:%d\n", store("conflict", 2, strs));
 
 
-	printf("[0]%d ", search("world", strs, 3));
-	printf("[2]%d ", search("ict", strs, 3));
-	printf("[2]%d ", search("ct", strs, 3));
-	printf("[-1]%d ", search("cty", strs, 3));
-	printf("[1]%d ", search("xy", strs, 3));
-	putchar('\n');
+    printf("[0]%d ", search("world", strs, 3));
+    printf("[2]%d ", search("ict", strs, 3));
+    printf("[2]%d ", search("ct", strs, 3));
+    printf("[-1]%d ", search("cty", strs, 3));
+    printf("[1]%d ", search("xy", strs, 3));
+    putchar('\n');
 }
 
 
 int main(int argc, char **argv) {
-	store_test();
-	search_test();
-	return 0;
+    store_test();
+    search_test();
+    return 0;
 }

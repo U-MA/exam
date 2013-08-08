@@ -6,20 +6,20 @@
  * 問題(1)
  */
 int search2(int *a, int n, int x) {
-	int l, m, r;
+    int l, m, r;
 
-	l = 0, r = n-1;
-	while (l <= r) {
-		m = (r+l)/2; // 半分に分ける添字
-		if (a[m] == x) { // 見つかった
-			return m;
-		} else if (a[m] < x) {
-			l = m+1;
-		} else {
-			r = m-1;
-		}
-	}
-	return -1;
+    l = 0, r = n-1;
+    while (l <= r) {
+        m = (r+l)/2; // 半分に分ける添字
+        if (a[m] == x) { // 見つかった
+            return m;
+        } else if (a[m] < x) {
+            l = m+1;
+        } else {
+            r = m-1;
+        }
+    }
+    return -1;
 }
 
 
@@ -43,58 +43,58 @@ int search2(int *a, int n, int x) {
  *         n >= 1より log[2]n <= log[3]nなので二分探索法の方が比較回数は少ないと言える.
  */
 int search3(int *a, int n, int x) {
-	int l, m1, m2, r;
+    int l, m1, m2, r;
 
-	l=0, r=n-1;
-	while (l <= r) {
-		m1 = (r+2*l)/3, m2 = (2*r+l)/3;
-		if (a[m1] == x) {
-			return m1;
-		} else if (a[m2] == x) {
-			return m2;
-		} else if (x < a[m1]) {
-			r = m1-1;
-		} else if ((a[m1] < x) && (x < a[m2])) {
-			l = m1+1, r = m2-1;
-		} else if (x > a[m2]) {
-			l = m2+1;
-		}
-	}
-	return -1;
+    l=0, r=n-1;
+    while (l <= r) {
+        m1 = (r+2*l)/3, m2 = (2*r+l)/3;
+        if (a[m1] == x) {
+            return m1;
+        } else if (a[m2] == x) {
+            return m2;
+        } else if (x < a[m1]) {
+            r = m1-1;
+        } else if ((a[m1] < x) && (x < a[m2])) {
+            l = m1+1, r = m2-1;
+        } else if (x > a[m2]) {
+            l = m2+1;
+        }
+    }
+    return -1;
 }
 
 
 void search2test() {
-	int a[10] = { -2, -1, 0, 1, 3, 5, 8, 12, 15, 23 }; // 昇順に並べた配列
-	
-	printf("search2test: ");
-	if (search2(a, 10, 3) != 4) {
-		printf("FAIL\n");
-	} else if (search2(a, 10, 24) != -1) {
-		printf("FAIL\n");
-	} else {
-		printf("OK\n");
-	}
+    int a[10] = { -2, -1, 0, 1, 3, 5, 8, 12, 15, 23 }; // 昇順に並べた配列
+    
+    printf("search2test: ");
+    if (search2(a, 10, 3) != 4) {
+        printf("FAIL\n");
+    } else if (search2(a, 10, 24) != -1) {
+        printf("FAIL\n");
+    } else {
+        printf("OK\n");
+    }
 }
 
 void search3test() {
-	int a[10] = { -2, -1, 0, 1, 3, 5, 8, 12, 15, 23 }; // 昇順に並べた配列
-	
-	printf("search3test: ");
-	if (search3(a, 10, 0) != 2) {
-		printf("case1 FAIL\n");
-	} else if (search3(a, 10, 24) != -1) {
-		printf("FAIL\n");
-	} else {
-		printf("OK\n");
-	}
+    int a[10] = { -2, -1, 0, 1, 3, 5, 8, 12, 15, 23 }; // 昇順に並べた配列
+    
+    printf("search3test: ");
+    if (search3(a, 10, 0) != 2) {
+        printf("case1 FAIL\n");
+    } else if (search3(a, 10, 24) != -1) {
+        printf("FAIL\n");
+    } else {
+        printf("OK\n");
+    }
 }
 
 
 int main(int argc, char **argv) {
 
-	search2test();
-	search3test();
+    search2test();
+    search3test();
 
-	return 0;
+    return 0;
 }

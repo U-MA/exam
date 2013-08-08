@@ -8,15 +8,15 @@
  * 問題(1)で作る関数
  */
 void getdiag(int a[][M], int i1, int j1, int d[2]) {
-	int i, j;
+    int i, j;
 
-	while ((i1 < M) && (a[++i1][j1] != 0)); // 右方向に進む
-	i1--;
-	while ((j1 < M) && (a[i1][++j1] != 0)); // 下方向に進む
-	j1--;
+    while ((i1 < M) && (a[++i1][j1] != 0)); // 右方向に進む
+    i1--;
+    while ((j1 < M) && (a[i1][++j1] != 0)); // 下方向に進む
+    j1--;
 
-	d[0] = i1;
-	d[1] = j1;
+    d[0] = i1;
+    d[1] = j1;
 }
 
 
@@ -25,16 +25,16 @@ void getdiag(int a[][M], int i1, int j1, int d[2]) {
  * 問題(2)で作る関数
  */
 void setc(int a[][M], int i, int j, int c) {
-	int x, y;
-	int d[2];
+    int x, y;
+    int d[2];
 
-	getdiag(a, i, j, d);
+    getdiag(a, i, j, d);
 
-	for(x=i; x <= d[0]; x++) {
-		for (y=j; y <= d[1]; y++) {
-			a[x][y] = c;
-		}
-	}
+    for(x=i; x <= d[0]; x++) {
+        for (y=j; y <= d[1]; y++) {
+            a[x][y] = c;
+        }
+    }
 }
 
 
@@ -43,18 +43,18 @@ void setc(int a[][M], int i, int j, int c) {
  *          長方形領域の個数を返す
  */
 int setcall(int a[][M]) {
-	int i, j, c;
+    int i, j, c;
 
-	c=1;
-	for (i=0; i < M; i++) {
-		for (j=0; j < M; j++) {
-			if (a[i][j] == -1) {
-				setc(a, i, j, c);
-				c++;
-			}
-		}
-	}
-	return c-1;
+    c=1;
+    for (i=0; i < M; i++) {
+        for (j=0; j < M; j++) {
+            if (a[i][j] == -1) {
+                setc(a, i, j, c);
+                c++;
+            }
+        }
+    }
+    return c-1;
 }
 
 
@@ -63,23 +63,23 @@ int setcall(int a[][M]) {
  *       要素,...,n番目の要素にそれぞれ格納する
  */
 void hist(int a[][M], int n, int *b) {
-	int i, j;
-	int c, sum;
-	int d[2];
+    int i, j;
+    int c, sum;
+    int d[2];
 
-	c=1, sum=0;
-	for (i=0; i < M; i++) {
-		for (j=0; j < M; j++) {
-			if (a[i][j] == c) { // 要素がcであるものが見つかった
-				getdiag(a, i, j, d);
-				b[c] = (d[0]-i+1) * (d[1]-j+1);
-				sum += b[c]; // 0以外の要素数を数える
-				c++, i=-1;
-				break;
-			}
-		}
-	}
-	b[0] = M*M-sum;
+    c=1, sum=0;
+    for (i=0; i < M; i++) {
+        for (j=0; j < M; j++) {
+            if (a[i][j] == c) { // 要素がcであるものが見つかった
+                getdiag(a, i, j, d);
+                b[c] = (d[0]-i+1) * (d[1]-j+1);
+                sum += b[c]; // 0以外の要素数を数える
+                c++, i=-1;
+                break;
+            }
+        }
+    }
+    b[0] = M*M-sum;
 }
 
 
@@ -87,77 +87,77 @@ void hist(int a[][M], int n, int *b) {
 
 /* テストコード。問題では必要の無いプログラム */
 int main(int argc, char **argv) {
-	int a[M][M] = {
-		 0,  0, -1, -1, -1,  0,  0,  0, -1, -1,
-		 0,  0, -1, -1, -1,  0,  0,  0,  0,  0,
-		-1,  0, -1, -1, -1,  0, -1, -1,  0,  0,
-		-1,  0,  0,  0,  0,  0, -1, -1,  0,  0,
-		 0,  0,  0,  0,  0,  0,  0,  0, -1, -1,
-		 0,  0,  0,  0,  0,  0,  0,  0, -1, -1,
-		 0, -1, -1, -1, -1, -1, -1, -1,  0,  0,
-		 0, -1, -1, -1, -1, -1, -1, -1,  0,  0,
-		 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		 0,  0,  0,  0,  0,  0,  0,  0,  0, -1
-	};
-	int b[20] = { 0 };
+    int a[M][M] = {
+         0,  0, -1, -1, -1,  0,  0,  0, -1, -1,
+         0,  0, -1, -1, -1,  0,  0,  0,  0,  0,
+        -1,  0, -1, -1, -1,  0, -1, -1,  0,  0,
+        -1,  0,  0,  0,  0,  0, -1, -1,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0, -1, -1,
+         0,  0,  0,  0,  0,  0,  0,  0, -1, -1,
+         0, -1, -1, -1, -1, -1, -1, -1,  0,  0,
+         0, -1, -1, -1, -1, -1, -1, -1,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,  0, -1
+    };
+    int b[20] = { 0 };
 
-	int d02to24[2]; // i1=2,j1=0 -> i2=4,j2=2
-	int chk24[2] = { 2, 4 };
-	int i, j;
-	int num; // 領域の数
+    int d02to24[2]; // i1=2,j1=0 -> i2=4,j2=2
+    int chk24[2] = { 2, 4 };
+    int i, j;
+    int num; // 領域の数
 
-	getdiag(a, 0, 2, d02to24);
+    getdiag(a, 0, 2, d02to24);
 
-	for (i=0; i < 2; i++) {
-		if (d02to24[i] =! chk24[i]) {
-			printf("FAIL\n");
-			return 0;
-		}
-	}
-	printf("OK\n");
+    for (i=0; i < 2; i++) {
+        if (d02to24[i] =! chk24[i]) {
+            printf("FAIL\n");
+            return 0;
+        }
+    }
+    printf("OK\n");
 
-	for (i=0; i < M; i++) {
-		for (j=0; j < M; j++) {
-			printf("%2d ", a[i][j]);
-		}
-		putchar('\n');
-	}
+    for (i=0; i < M; i++) {
+        for (j=0; j < M; j++) {
+            printf("%2d ", a[i][j]);
+        }
+        putchar('\n');
+    }
 
-	setc(a, 0, 2, 1);
+    setc(a, 0, 2, 1);
 
-	putchar('\n');
-	for (i=0; i < M; i++) {
-		for (j=0; j < M; j++) {
-			printf("%2d ", a[i][j]);
-		}
-		putchar('\n');
-	}
+    putchar('\n');
+    for (i=0; i < M; i++) {
+        for (j=0; j < M; j++) {
+            printf("%2d ", a[i][j]);
+        }
+        putchar('\n');
+    }
 
-	setc(a, 0, 2, -1);
+    setc(a, 0, 2, -1);
 
-	putchar('\n');
-	for (i=0; i < M; i++) {
-		for (j=0; j < M; j++) {
-			printf("%2d ", a[i][j]);
-		}
-		putchar('\n');
-	}
+    putchar('\n');
+    for (i=0; i < M; i++) {
+        for (j=0; j < M; j++) {
+            printf("%2d ", a[i][j]);
+        }
+        putchar('\n');
+    }
 
-	printf("\n領域数:%d\n", (num = setcall(a)));
+    printf("\n領域数:%d\n", (num = setcall(a)));
 
-	putchar('\n');
-	for (i=0; i < M; i++) {
-		for (j=0; j < M; j++) {
-			printf("%2d ", a[i][j]);
-		}
-		putchar('\n');
-	}
-	putchar('\n');
+    putchar('\n');
+    for (i=0; i < M; i++) {
+        for (j=0; j < M; j++) {
+            printf("%2d ", a[i][j]);
+        }
+        putchar('\n');
+    }
+    putchar('\n');
 
-	hist(a, num, b);
-	for (i=0; i < 20; i++) {
-		printf("b[%d] : %d\n", i, b[i]);
-	}
+    hist(a, num, b);
+    for (i=0; i < 20; i++) {
+        printf("b[%d] : %d\n", i, b[i]);
+    }
 
-	return 0;
+    return 0;
 }

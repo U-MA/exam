@@ -7,15 +7,15 @@
 /* suma: 大きさnの整数型の２つの配列a,bを受け取り、b[i]が1となるa[i]の総和を返す
  */
 int suma(int *a, int *b) {
-	int i, sum;
+    int i, sum;
 
-	sum=0;
-	for (i=0; i < n; i++) {
-		if (b[i] == 1) {
-			sum += a[i];
-		}
-	}
-	return sum;
+    sum=0;
+    for (i=0; i < n; i++) {
+        if (b[i] == 1) {
+            sum += a[i];
+        }
+    }
+    return sum;
 }
 
 
@@ -24,16 +24,16 @@ int suma(int *a, int *b) {
  *         その個数を表示する
  */
 void printa(int *a, int *b) {
-	int i, num;
+    int i, num;
 
-	num=0;
-	for (i=0; i < n; i++) {
-		if (b[i] == 1) {
-			printf("%3d ", a[i]);
-			num++;
-		}
-	}
-	printf("\t(%2d個)\n", num);
+    num=0;
+    for (i=0; i < n; i++) {
+        if (b[i] == 1) {
+            printf("%3d ", a[i]);
+            num++;
+        }
+    }
+    printf("\t(%2d個)\n", num);
 }
 
 
@@ -47,17 +47,17 @@ void printa(int *a, int *b) {
  * このアルゴリズムは昔Twitterのサムネがチェブラーシカだった人から教えてもらった
  */
 int increment(int *b) {
-	int i;
+    int i;
 
-	for (i=0; i < n; i++) {
-		if (b[i] == 0) {
-			b[i] = 1;
-			return 0;
-		} else {
-			b[i] = 0;
-		}
-	}
-	return 1;
+    for (i=0; i < n; i++) {
+        if (b[i] == 0) {
+            b[i] = 1;
+            return 0;
+        } else {
+            b[i] = 0;
+        }
+    }
+    return 1;
 }
 
 
@@ -66,14 +66,14 @@ int increment(int *b) {
  * 選び方がない場合は何も表示しなくていよい
  */
 int main(int argc, char **argv) {
-	int a[n] = { 4, 2, 12, 3, 10, 7, 5, 8, 1, 15 };
-	int b[n] = { 0 };
-	int sum = 15;                    // 求める和の値。ここでは15
+    int a[n] = { 4, 2, 12, 3, 10, 7, 5, 8, 1, 15 };
+    int b[n] = { 0 };
+    int sum = 15;                    // 求める和の値。ここでは15
 
-	while (increment(b) != 1) {
-		if (suma(a, b) == 15) {
-			printa(a, b);                // 表示の見栄えが悪い
-		}
-	}
-	return 0;
+    while (increment(b) != 1) {
+        if (suma(a, b) == 15) {
+            printa(a, b);                // 表示の見栄えが悪い
+        }
+    }
+    return 0;
 }
