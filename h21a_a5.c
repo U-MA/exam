@@ -6,7 +6,7 @@
 // 問題(1)
 /* suma: 大きさnの整数型の２つの配列a,bを受け取り、b[i]が1となるa[i]の総和を返す
  */
-int suma(int *a, int *b) {
+int suma(const int *a, int *b) {
     int i, sum;
 
     sum=0;
@@ -23,7 +23,7 @@ int suma(int *a, int *b) {
 /* printa: 大きさnの整数型の２つの配列a,bを受け取り、b[i]が1となる配列aの全ての要素と
  *         その個数を表示する
  */
-void printa(int *a, int *b) {
+void printa(const int *a, int *b) {
     int i, num;
 
     num=0;
