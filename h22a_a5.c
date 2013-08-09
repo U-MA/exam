@@ -39,7 +39,7 @@ void countAll(int *y, int n, int *b) {
 }
 
 
-void count_test();
+void count_test();                                        // テストのためのプロトタイプ宣言
 
 // 問題(4)
 /* 与えられた整数の各桁に現れる0から9の出現回数を表示
