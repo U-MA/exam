@@ -13,7 +13,7 @@ void reada(int a[][MAX], int m, int n)
 }
 
 /* Solution of (2) */
-void suma(int a[][MAX], int m, int n, int *r, int *c)
+void suma(int a[][MAX], int m, int n, int r[], int c[])
 {
     /* initialize arrays r, c by 0 */
     memset(r, 0, m * sizeof(int));
