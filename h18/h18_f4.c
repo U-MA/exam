@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-const int MAX = 100;
+const int MAX = 100; /* the maximum of two-dimensional array's column */
 
 /* Solution of (1) */
 void reada(int a[][MAX], int m, int n)
@@ -15,11 +15,7 @@ void reada(int a[][MAX], int m, int n)
 /* Solution of (2) */
 void suma(int a[][MAX], int m, int n, int r[], int c[])
 {
-    /* initialize arrays r, c by 0 */
-    memset(r, 0, m * sizeof(int));
-    memset(c, 0, n * sizeof(int));
-
-    int i,j;
+    int i, j;
     for (i=0; i < m; i++)
         for (j=0; j < n; j++) {
             r[i] += a[i][j];
@@ -36,6 +32,10 @@ int main(int argc, char **argv)
     reada(a, m, n);
 
     int r[m], c[n];
+    /* initialize arrays r, c by 0 */
+    memset(r, 0, m * sizeof(int));
+    memset(c, 0, n * sizeof(int));
+
     suma(a, m, n, r, c);
 
     int i;
