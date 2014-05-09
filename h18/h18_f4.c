@@ -4,7 +4,7 @@
 const int MAX = 100;
 
 /* Solution of (1) */
-void reada(int a[][MAX], const int m, const int n)
+void reada(int a[][MAX], int m, int n)
 {
     int i, j;
     for (i=0; i < m; i++)
@@ -13,7 +13,7 @@ void reada(int a[][MAX], const int m, const int n)
 }
 
 /* Solution of (2) */
-void suma(int a[][MAX], const int m, const int n, int *r, int *c)
+void suma(int a[][MAX], int m, int n, int *r, int *c)
 {
     /* initialize arrays r, c by 0 */
     memset(r, 0, m * sizeof(int));
