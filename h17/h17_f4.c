@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 /* Solution of (1) */
-unsigned int count(int *a, unsigned int n, int x)
+unsigned int count(int a[], unsigned int n, int x)
 {
     unsigned int ret = 0;
     unsigned int i;
