@@ -10,3 +10,6 @@ exam
 
 問題のアドレス
  - http://www.mi.s.osakafu-u.ac.jp/exam/exam.html
+
+LICENSE
+ - MIT
